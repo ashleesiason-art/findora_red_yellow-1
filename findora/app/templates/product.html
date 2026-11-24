@@ -5,6 +5,7 @@
 <div class="box pd">
   <div class="thumb" style="background:{{ p.color }}">
     {% if p.id == 2 %}<img src="{{ url_for('static', filename='img/SAMSUNG.jpg') }}" alt="{{ p.name }}">
+    {% elif p.id == 6 %}<img src="{{ url_for('static', filename='img/Levi_Jeans.jpeg') }}" alt="{{ p.name }}">
     {% else %}{{ p.emoji }}{% endif %}
   </div>
   <div>

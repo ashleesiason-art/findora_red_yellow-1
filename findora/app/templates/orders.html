@@ -5,7 +5,7 @@
 {% for o in orders %}
 <div class="box">
   <div class="box-h"><b>Order #{{ o.id }} <small style="color:var(--mut);font-weight:400">· {{ o.created_at }} · {{ o.payment_method }}</small></b><span class="st {{ o.status }}">{{ o.status }}</span></div>
-  {% for i in o['items'] %}<div class="oi"><div class="thumb" style="background:{{ i.color }}">{% if i.product_id == 2 %}<img src="{{ url_for('static', filename='img/SAMSUNG.jpg') }}" alt="{{ i.name }}">{% else %}{{ i.emoji }}{% endif %}</div><a style="flex:1" href="{{ url_for('product', pid=i.product_id) }}">{{ i.name }}<br><small style="color:var(--mut)">× {{ i.qty }}</small></a><span>{{ i.price|peso }}</span></div>{% endfor %}
+  {% for i in o['items'] %}<div class="oi"><div class="thumb" style="background:{{ i.color }}">{% if i.product_id == 2 %}<img src="{{ url_for('static', filename='img/SAMSUNG.jpg') }}" alt="{{ i.name }}">{% elif i.product_id == 6 %}<img src="{{ url_for('static', filename='img/Levi_Jeans.jpeg') }}" alt="{{ i.name }}">{% else %}{{ i.emoji }}{% endif %}</div><a style="flex:1" href="{{ url_for('product', pid=i.product_id) }}">{{ i.name }}<br><small style="color:var(--mut)">× {{ i.qty }}</small></a><span>{{ i.price|peso }}</span></div>{% endfor %}
   <div style="text-align:right;border-top:1px solid var(--bd);padding-top:10px">Order Total: <b class="price" style="font-size:20px">{{ o.total|peso }}</b>
     {% if o.status in ('pending','paid') %}<form method="post" action="{{ url_for('cancel_order', oid=o.id) }}" style="display:inline" onsubmit="return confirm('Cancel this order?')"> <button class="btn sm gray">Cancel</button></form>{% endif %}</div>
 </div>

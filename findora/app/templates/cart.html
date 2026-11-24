@@ -8,6 +8,7 @@
   <div class="cart-row">
     <a class="thumb" href="{{ url_for('product', pid=r.pid) }}" style="background:{{ r.color }}">
       {% if r.pid == 2 %}<img src="{{ url_for('static', filename='img/SAMSUNG.jpg') }}" alt="{{ r.name }}">
+      {% elif r.pid == 6 %}<img src="{{ url_for('static', filename='img/Levi_Jeans.jpeg') }}" alt="{{ r.name }}">
       {% else %}{{ r.emoji }}{% endif %}
     </a>
     <a href="{{ url_for('product', pid=r.pid) }}">{{ r.name }}</a>

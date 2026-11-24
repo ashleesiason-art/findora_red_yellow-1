@@ -4,7 +4,7 @@
 <form style="margin-bottom:12px;max-width:360px"><input type="text" name="q" value="{{ q }}" placeholder="Search products…"></form>
 <table><tr><th></th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Sold</th><th>Status</th><th></th></tr>
 {% for p in rows %}<tr style="{{ 'opacity:.5' if not p.is_active }}">
-  <td><div class="thumb" style="background:{{ p.color }};width:44px;font-size:24px;border-radius:4px">{% if p.id == 2 %}<img src="{{ url_for('static', filename='img/SAMSUNG.jpg') }}" alt="{{ p.name }}">{% else %}{{ p.emoji }}{% endif %}</div></td>
+  <td><div class="thumb" style="background:{{ p.color }};width:44px;font-size:24px;border-radius:4px">{% if p.id == 2 %}<img src="{{ url_for('static', filename='img/SAMSUNG.jpg') }}" alt="{{ p.name }}">{% elif p.id == 6 %}<img src="{{ url_for('static', filename='img/Levi_Jeans.jpeg') }}" alt="{{ p.name }}">{% else %}{{ p.emoji }}{% endif %}</div></td>
   <td>{{ p.name }}</td><td>{{ p.cat_name }}</td><td>{{ p.price|peso }}</td><td>{{ p.stock }}</td><td>{{ p.sold }}</td>
   <td>{{ 'Active' if p.is_active else 'Hidden' }}</td>
   <td style="white-space:nowrap"><a class="btn sm gray" href="{{ url_for('admin_product_form', pid=p.id) }}">Edit</a>
