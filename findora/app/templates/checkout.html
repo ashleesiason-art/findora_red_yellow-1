@@ -9,8 +9,8 @@
       <label>Address</label><input type="text" name="ship_address" value="{{ user.address or '' }}" placeholder="House no., street, barangay, city" required></div>
     <div class="box pay"><h2>💳 Payment Method</h2>
       <label><input type="radio" name="payment_method" value="COD" checked> Cash on Delivery</label>
-      <label><input type="radio" name="payment_method" value="GCash"> GCash (demo – marked paid)</label>
-      <label><input type="radio" name="payment_method" value="Card"> Credit / Debit Card (demo – marked paid)</label></div>
+      <label><input type="radio" name="payment_method" value="GCash"> GCash</label>
+      <label><input type="radio" name="payment_method" value="Card"> Credit / Debit Card</label></div>
   </div>
   <div class="box sum"><h2>Order Summary</h2>
     {% for r in rows %}<div><span>{{ r.emoji }} {{ r.name }} × {{ r.qty }}</span><span>{{ (r.price*r.qty)|peso }}</span></div>{% endfor %}
