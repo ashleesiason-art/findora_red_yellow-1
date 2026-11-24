@@ -1,7 +1,10 @@
 {% macro card(p) %}
 <a class="card" href="{{ url_for('product', pid=p.id) }}">
   {% if p|pct_off %}<div class="tag">-{{ p|pct_off }}%</div>{% endif %}
-  <div class="thumb" style="background:{{ p.color }}">{{ p.emoji }}</div>
+  <div class="thumb" style="background:{{ p.color }}">
+    {% if p.id == 2 %}<img src="{{ url_for('static', filename='img/SAMSUNG.jpg') }}" alt="{{ p.name }}">
+    {% else %}{{ p.emoji }}{% endif %}
+  </div>
   <div class="info">
     <div class="nm">{{ p.name }}</div>
     <div><span class="price">{{ p.price|peso }}</span>{% if p|pct_off %}<span class="old">{{ p.original_price|peso }}</span>{% endif %}</div>

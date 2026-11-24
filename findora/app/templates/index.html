@@ -28,7 +28,7 @@
 <div class="box">
   <div class="fs-h"><h2 style="color:var(--o)">⚡ FLASH SALE</h2><div class="cd" id="countdown"></div><a class="more" style="margin-left:auto" href="{{ url_for('search', sort='sales') }}">See all ›</a></div>
   <div class="grid">{% for p in flash_sale[:6] %}<a class="card" href="{{ url_for('product', pid=p.id) }}">
-    <div class="tag">-{{ p|pct_off }}%</div><div class="thumb" style="background:{{ p.color }}">{{ p.emoji }}</div>
+    <div class="tag">-{{ p|pct_off }}%</div><div class="thumb" style="background:{{ p.color }}">{% if p.id == 2 %}<img src="{{ url_for('static', filename='img/SAMSUNG.jpg') }}" alt="{{ p.name }}">{% else %}{{ p.emoji }}{% endif %}</div>
     <div class="info"><div class="nm">{{ p.name }}</div><div class="price">{{ p.price|peso }}</div>
     <div class="bar"><i style="width:{{ [95, 30 + (p.sold % 60)]|min }}%"></i><span>{{ p.sold }} sold</span></div></div></a>{% endfor %}</div>
 </div>

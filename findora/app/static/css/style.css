@@ -38,6 +38,7 @@ main{padding:18px 0 40px;min-height:60vh}
 .card{background:#fff;border:1px solid transparent;border-radius:2px;box-shadow:0 1px 1px rgba(0,0,0,.1);overflow:hidden;position:relative;display:flex;flex-direction:column;transition:.15s}
 .card:hover{border-color:var(--o);transform:translateY(-2px);box-shadow:0 2px 8px rgba(0,0,0,.15)}
 .thumb{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:72px}
+.thumb img{width:100%;height:100%;object-fit:cover}
 .card .info{padding:8px;flex:1;display:flex;flex-direction:column;gap:6px}
 .card .nm{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:38px;font-size:13px}
 .price{color:var(--o);font-size:16px;font-weight:600}.old{color:#aaa;text-decoration:line-through;font-size:12px;margin-left:5px;font-weight:400}

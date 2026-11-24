@@ -6,7 +6,10 @@
   <div class="cart-row" style="color:var(--mut);font-size:13px"><span></span><span>Product</span><span>Unit Price</span><span>Quantity</span><span>Total</span><span>Action</span></div>
   {% for r in rows %}
   <div class="cart-row">
-    <a class="thumb" href="{{ url_for('product', pid=r.pid) }}" style="background:{{ r.color }}">{{ r.emoji }}</a>
+    <a class="thumb" href="{{ url_for('product', pid=r.pid) }}" style="background:{{ r.color }}">
+      {% if r.pid == 2 %}<img src="{{ url_for('static', filename='img/SAMSUNG.jpg') }}" alt="{{ r.name }}">
+      {% else %}{{ r.emoji }}{% endif %}
+    </a>
     <a href="{{ url_for('product', pid=r.pid) }}">{{ r.name }}</a>
     <span>{{ r.price|peso }}</span>
     <form method="post" action="{{ url_for('cart_update') }}"><input type="hidden" name="pid" value="{{ r.pid }}">
