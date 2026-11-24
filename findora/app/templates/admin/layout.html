@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}Admin{% endblock %} - FINDORA Seller Centre</title>
+<link rel="icon" href="{{ url_for('static', filename='img/logo.svg') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"></head>
+<body><div class="adm">
+<aside>
+  <a class="logo" href="{{ url_for('admin_dashboard') }}"><img src="{{ url_for('static', filename='img/logo.svg') }}" alt=""><span>FINDORA</span></a>
+  {% set ep = request.endpoint %}
+  <a class="{{ 'on' if ep == 'admin_dashboard' }}" href="{{ url_for('admin_dashboard') }}">📊 Dashboard</a>
+  <a class="{{ 'on' if ep and ep.startswith('admin_product') }}" href="{{ url_for('admin_products') }}">📦 Products</a>
+  <a class="{{ 'on' if ep and 'order' in ep }}" href="{{ url_for('admin_orders') }}">🧾 Orders</a>
+  <a class="{{ 'on' if ep == 'admin_users' }}" href="{{ url_for('admin_users') }}">👥 Customers</a>
+  <a href="{{ url_for('index') }}">🏬 View Store</a>
+  <a href="{{ url_for('logout') }}">🚪 Logout</a>
+</aside>
+<main>
+  {% with msgs = get_flashed_messages(with_categories=true) %}{% for cat, m in msgs %}<div class="flash {{ cat }}">{{ m }}</div>{% endfor %}{% endwith %}
+  {% block content %}{% endblock %}
+</main></div>
+<div id="toast"></div><script src="{{ url_for('static', filename='js/main.js') }}"></script></body></html>

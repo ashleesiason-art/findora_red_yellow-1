@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block title %}Login - FINDORA{% endblock %}
+{% block content %}<div class="box auth"><h2>Log In</h2>
+<form method="post"><label>Email</label><input type="email" name="email" required autofocus>
+<label>Password</label><input type="password" name="password" required>
+<p><button class="btn" style="width:100%">LOG IN</button></p></form>
+<p>New to FINDORA? <a style="color:var(--o)" href="{{ url_for('register') }}">Sign Up</a></p>
+<p style="font-size:12px;color:var(--mut)">Demo: user@findora.ph / user123 &nbsp;|&nbsp; admin@findora.ph / admin123</p></div>{% endblock %}

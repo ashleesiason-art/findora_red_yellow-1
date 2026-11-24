@@ -1,0 +1,30 @@
+{% extends "base.html" %}{% from "_macros.html" import card %}
+{% block title %}{{ p.name }} - FINDORA{% endblock %}
+{% block content %}
+<p style="color:var(--mut)"><a href="/">FINDORA</a> › <a href="{{ url_for('search', cat=p.category_id) }}">{{ p.cat_name }}</a> › {{ p.name }}</p>
+<div class="box pd">
+  <div class="thumb" style="background:{{ p.color }}">{{ p.emoji }}</div>
+  <div>
+    <h1>{{ p.name }}</h1>
+    <div><span class="stars">★ {{ p.rating }}</span> · {{ reviews|length }} reviews · {{ p.sold }} sold</div>
+    <div class="pr">{{ p.price|peso }}{% if p|pct_off %}<span class="old" style="font-size:16px">{{ p.original_price|peso }}</span> <span class="tag" style="position:static;display:inline-block">-{{ p|pct_off }}%</span>{% endif %}</div>
+    <p style="color:#555">{{ p.description }}</p>
+    <p>Shipping: {% if p.price >= 1000 %}<b style="color:var(--g)">Free</b>{% else %}₱50 (free on ₱1,000+ orders){% endif %}</p>
+    {% if p.stock > 0 %}
+      <p>Quantity:
+        <span class="qty"><button data-step="-1" data-target="#q">−</button><input id="q" type="number" value="1" min="1" max="{{ p.stock }}"><button data-step="1" data-target="#q">+</button></span>
+        <span style="color:var(--mut)">&nbsp;{{ p.stock }} pieces available</span></p>
+      <p><button class="btn ghost" data-add="{{ p.id }}" data-qty-input="#q">🛒 Add To Cart</button>
+         <button class="btn" data-add="{{ p.id }}" data-qty-input="#q" data-go="{{ url_for('cart') }}">Buy Now</button></p>
+    {% else %}<p><b style="color:#b3261e">Out of stock</b></p>{% endif %}
+  </div>
+</div>
+<div class="box"><h2>Product Ratings</h2>
+  {% for r in reviews %}<div class="review"><b>{{ r.full_name }}</b> <span class="stars">{{ '★' * r.rating }}{{ '☆' * (5 - r.rating) }}</span><div>{{ r.comment }}</div><small style="color:var(--mut)">{{ r.created_at }}</small></div>
+  {% else %}<p style="color:var(--mut)">No reviews yet.</p>{% endfor %}
+  {% if user %}<form method="post" action="{{ url_for('add_review', pid=p.id) }}" style="margin-top:12px;max-width:500px">
+    <label>Your rating</label><select name="rating">{% for i in [5,4,3,2,1] %}<option value="{{ i }}">{{ '★' * i }}</option>{% endfor %}</select>
+    <label>Comment</label><textarea name="comment" rows="2"></textarea><p><button class="btn sm">Submit review</button></p></form>{% endif %}
+</div>
+{% if related %}<div class="box"><h2>You may also like</h2><div class="grid">{% for r in related %}{{ card(r) }}{% endfor %}</div></div>{% endif %}
+{% endblock %}

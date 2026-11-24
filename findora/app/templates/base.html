@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}FINDORA - Shop Online{% endblock %}</title>
+<link rel="icon" href="{{ url_for('static', filename='img/logo.svg') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head><body>
+<div class="topbar"><div class="wrap">
+  <div class="l"><a href="#">Seller Centre</a><a href="#">Download App</a></div>
+  <div>
+    {% if user %}
+      {% if user.role == 'admin' %}<a href="{{ url_for('admin_dashboard') }}">Admin Panel</a>{% endif %}
+      <a href="{{ url_for('account') }}">👤 {{ user.full_name }}</a>
+      <a href="{{ url_for('orders') }}">My Purchases</a>
+      <a href="{{ url_for('logout') }}">Logout</a>
+    {% else %}
+      <a href="{{ url_for('register') }}"><b>Sign Up</b></a><a href="{{ url_for('login') }}"><b>Login</b></a>
+    {% endif %}
+  </div>
+</div></div>
+<header class="hdr"><div class="wrap">
+  <div class="hdr-row">
+    <a class="logo" href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='img/logo.svg') }}" alt=""><span>FINDORA</span></a>
+    <form class="search" action="{{ url_for('search') }}">
+      <input name="q" value="{{ request.args.get('q','') }}" placeholder="Search products, brands and categories" autocomplete="off">
+      <button>🔍</button>
+    </form>
+    <a class="cart-btn" href="{{ url_for('cart') }}">🛒{% if cart_count %}<span class="badge" id="cartBadge">{{ cart_count }}</span>{% endif %}</a>
+  </div>
+  <div class="catlinks">{% for c in all_categories[:7] %}<a href="{{ url_for('search', cat=c.id) }}">{{ c.name }}</a>{% endfor %}</div>
+</div></header>
+<main><div class="wrap">
+  {% with msgs = get_flashed_messages(with_categories=true) %}{% for cat, m in msgs %}<div class="flash {{ cat }}">{{ m }}</div>{% endfor %}{% endwith %}
+  {% block content %}{% endblock %}
+</div></main>
+<footer><div class="wrap">
+  <div class="cols">
+    <div><b>Customer Care</b><a href="#">Help Centre</a><a href="#">How to Buy</a><a href="#">Returns &amp; Refunds</a></div>
+    <div><b>About FINDORA</b><a href="#">About Us</a><a href="#">Careers</a><a href="#">Flash Deals</a></div>
+    <div><b>Payment</b>COD · GCash · Card</div>
+    <div><b>FINDORA</b>Your temporary logo lives in <code>app/static/img/logo.svg</code></div>
+  </div>
+  <p style="text-align:center;margin-top:24px">© 2026 FINDORA. Currency: PHP. Free shipping at ₱1,000+</p>
+</div></footer>
+<div id="toast"></div>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body></html>

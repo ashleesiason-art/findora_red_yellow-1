@@ -1,0 +1,16 @@
+{% extends "admin/layout.html" %}{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h1>Dashboard</h1>
+<div class="stats">
+  <div class="stat">Revenue<b>{{ s.revenue|peso }}</b></div><div class="stat">Orders<b>{{ s.orders }}</b></div>
+  <div class="stat">Customers<b>{{ s.customers }}</b></div><div class="stat">Active products<b>{{ s.products }}</b></div>
+</div>
+<div class="two">
+  <div class="box"><h2>Recent orders</h2><table><tr><th>#</th><th>Customer</th><th>Total</th><th>Status</th></tr>
+    {% for o in recent %}<tr><td>{{ o.id }}</td><td>{{ o.full_name }}</td><td>{{ o.total|peso }}</td><td><span class="st {{ o.status }}">{{ o.status }}</span></td></tr>{% else %}<tr><td colspan="4">No orders yet</td></tr>{% endfor %}</table></div>
+  <div class="box"><h2>Monthly sales</h2><table><tr><th>Month</th><th>Orders</th><th>Revenue</th></tr>
+    {% for m in monthly %}<tr><td>{{ m.month }}</td><td>{{ m.orders }}</td><td>{{ m.revenue|peso }}</td></tr>{% else %}<tr><td colspan="3">No data</td></tr>{% endfor %}</table></div>
+  <div class="box"><h2>Best sellers</h2><table><tr><th>Product</th><th>Sold</th></tr>{% for b in best %}<tr><td>{{ b.name }}</td><td>{{ b.sold }}</td></tr>{% endfor %}</table></div>
+  <div class="box"><h2>⚠ Low stock</h2><table><tr><th>Product</th><th>Stock</th></tr>{% for b in low %}<tr><td><a href="{{ url_for('admin_product_form', pid=b.id) }}">{{ b.name }}</a></td><td>{{ b.stock }}</td></tr>{% else %}<tr><td colspan="2">All good</td></tr>{% endfor %}</table></div>
+</div>
+{% endblock %}

@@ -1,0 +1,6 @@
+{% extends "admin/layout.html" %}{% block title %}Customers{% endblock %}
+{% block content %}
+<h1>Customers</h1>
+<table><tr><th>#</th><th>Name</th><th>Email</th><th>Phone</th><th>Role</th><th>Orders</th><th>Spent</th><th>Joined</th></tr>
+{% for u in rows %}<tr><td>{{ u.id }}</td><td>{{ u.full_name }}</td><td>{{ u.email }}</td><td>{{ u.phone or '' }}</td><td>{{ u.role }}</td><td>{{ u.n_orders }}</td><td>{{ u.spent|peso }}</td><td>{{ u.created_at }}</td></tr>{% endfor %}</table>
+{% endblock %}

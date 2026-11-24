@@ -1,0 +1,27 @@
+{% extends "base.html" %}{% block title %}Checkout - FINDORA{% endblock %}
+{% block content %}
+<h2 style="color:var(--o)">Checkout</h2>
+<form method="post" class="two" style="align-items:start">
+  <div>
+    <div class="box"><h2>📍 Delivery Address</h2>
+      <div class="row"><div><label>Full name</label><input type="text" name="ship_name" value="{{ user.full_name }}" required></div>
+      <div><label>Phone</label><input type="tel" name="ship_phone" value="{{ user.phone or '' }}" required></div></div>
+      <label>Address</label><input type="text" name="ship_address" value="{{ user.address or '' }}" placeholder="House no., street, barangay, city" required></div>
+    <div class="box pay"><h2>💳 Payment Method</h2>
+      <label><input type="radio" name="payment_method" value="COD" checked> Cash on Delivery</label>
+      <label><input type="radio" name="payment_method" value="GCash"> GCash (demo – marked paid)</label>
+      <label><input type="radio" name="payment_method" value="Card"> Credit / Debit Card (demo – marked paid)</label></div>
+  </div>
+  <div class="box sum"><h2>Order Summary</h2>
+    {% for r in rows %}<div><span>{{ r.emoji }} {{ r.name }} × {{ r.qty }}</span><span>{{ (r.price*r.qty)|peso }}</span></div>{% endfor %}
+    <hr style="border:0;border-top:1px solid var(--bd)">
+    <label>Coupon code (try WELCOME10)</label>
+    <div style="display:flex;gap:6px"><input type="text" name="coupon" value="{{ code }}"><button class="btn sm gray" formaction="{{ url_for('checkout') }}" name="place" value="0">Apply</button></div>
+    <div style="margin-top:10px"><span>Subtotal</span><span>{{ subtotal|peso }}</span></div>
+    <div><span>Shipping</span><span>{{ shipping|peso if shipping else 'FREE' }}</span></div>
+    {% if discount %}<div style="color:var(--g)"><span>Coupon {{ coupon.code }}</span><span>-{{ discount|peso }}</span></div>{% endif %}
+    <div class="t"><span>Total</span><span>{{ total|peso }}</span></div>
+    <p><button class="btn" name="place" value="1" style="width:100%">Place Order</button></p>
+  </div>
+</form>
+{% endblock %}

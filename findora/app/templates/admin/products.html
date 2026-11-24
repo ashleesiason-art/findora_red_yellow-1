@@ -1,0 +1,13 @@
+{% extends "admin/layout.html" %}{% block title %}Products{% endblock %}
+{% block content %}
+<div class="box-h"><h1>Products</h1><a class="btn" href="{{ url_for('admin_product_form') }}">+ Add product</a></div>
+<form style="margin-bottom:12px;max-width:360px"><input type="text" name="q" value="{{ q }}" placeholder="Search products…"></form>
+<table><tr><th></th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Sold</th><th>Status</th><th></th></tr>
+{% for p in rows %}<tr style="{{ 'opacity:.5' if not p.is_active }}">
+  <td><div class="thumb" style="background:{{ p.color }};width:44px;font-size:24px;border-radius:4px">{{ p.emoji }}</div></td>
+  <td>{{ p.name }}</td><td>{{ p.cat_name }}</td><td>{{ p.price|peso }}</td><td>{{ p.stock }}</td><td>{{ p.sold }}</td>
+  <td>{{ 'Active' if p.is_active else 'Hidden' }}</td>
+  <td style="white-space:nowrap"><a class="btn sm gray" href="{{ url_for('admin_product_form', pid=p.id) }}">Edit</a>
+    <form method="post" action="{{ url_for('admin_product_toggle', pid=p.id) }}" style="display:inline"><button class="btn sm gray">{{ 'Hide' if p.is_active else 'Show' }}</button></form></td>
+</tr>{% endfor %}</table>
+{% endblock %}

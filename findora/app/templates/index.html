@@ -1,0 +1,41 @@
+{% extends "base.html" %}{% from "_macros.html" import card %}
+{% block content %}
+<div class="hero">
+  <div class="slider">
+    <a class="slide" href="{{ url_for('product', pid=1) }}"><img src="{{ url_for('static', filename='img/ads/hero1.svg') }}" alt="Mega Sale: Apple AirPods Pro (2nd Gen)"></a>
+    <a class="slide" href="{{ url_for('product', pid=2) }}"><img src="{{ url_for('static', filename='img/ads/hero2.svg') }}" alt="New arrival: Samsung Galaxy A16 5G"></a>
+    <a class="slide" href="{{ url_for('product', pid=7) }}"><img src="{{ url_for('static', filename='img/ads/hero3.svg') }}" alt="Fashion Week: Converse Chuck Taylor All Star Low"></a>
+    <a class="slide" href="{{ url_for('register') }}"><img src="{{ url_for('static', filename='img/ads/hero4.svg') }}" alt="Join free and get 10% off with WELCOME10"></a>
+    <div class="dots"></div>
+  </div>
+  <div class="side">
+    <a href="{{ url_for('product', pid=3) }}"><img src="{{ url_for('static', filename='img/ads/side1.svg') }}" alt="Flash Deal: Anker PowerCore 20,000mAh"></a>
+    <a href="{{ url_for('product', pid=13) }}"><img src="{{ url_for('static', filename='img/ads/side2.svg') }}" alt="Beauty Fest: The Ordinary Hyaluronic Acid"></a>
+  </div>
+</div>
+<div class="box perks">
+  <div><span>🔁</span>15-Day Returns</div><div><span>🚚</span>Free Shipping ₱1,000+</div><div><span>💳</span>COD / GCash / Card</div><div><span>🛡️</span>FINDORA Guarantee</div>
+</div>
+<div class="box"><div class="box-h"><h2>Categories</h2></div>
+  <div class="cats">{% for c in all_categories %}<a href="{{ url_for('search', cat=c.id) }}"><span>{{ c.icon }}</span>{{ c.name }}</a>{% endfor %}</div>
+</div>
+<div class="ads3">
+  <a href="{{ url_for('product', pid=12) }}"><img src="{{ url_for('static', filename='img/ads/promo1.svg') }}" alt="Tefal Non-stick Frying Pan 28cm"></a>
+  <a href="{{ url_for('product', pid=16) }}"><img src="{{ url_for('static', filename='img/ads/promo2.svg') }}" alt="Lavazza Qualita Rossa Coffee Beans 1kg"></a>
+  <a href="{{ url_for('product', pid=19) }}"><img src="{{ url_for('static', filename='img/ads/promo3.svg') }}" alt="LEGO Classic Large Creative Brick Box"></a>
+</div>
+{% if flash_sale %}
+<div class="box">
+  <div class="fs-h"><h2 style="color:var(--o)">⚡ FLASH SALE</h2><div class="cd" id="countdown"></div><a class="more" style="margin-left:auto" href="{{ url_for('search', sort='sales') }}">See all ›</a></div>
+  <div class="grid">{% for p in flash_sale[:6] %}<a class="card" href="{{ url_for('product', pid=p.id) }}">
+    <div class="tag">-{{ p|pct_off }}%</div><div class="thumb" style="background:{{ p.color }}">{{ p.emoji }}</div>
+    <div class="info"><div class="nm">{{ p.name }}</div><div class="price">{{ p.price|peso }}</div>
+    <div class="bar"><i style="width:{{ [95, 30 + (p.sold % 60)]|min }}%"></i><span>{{ p.sold }} sold</span></div></div></a>{% endfor %}</div>
+</div>
+{% endif %}
+<div class="box"><div class="box-h"><h2>Top Products</h2><a class="more" href="{{ url_for('search', sort='sales') }}">See all ›</a></div>
+  <div class="grid">{% for p in top %}{{ card(p) }}{% endfor %}</div></div>
+<div class="box"><div class="box-h"><h2>Daily Discover</h2></div>
+  <div class="grid">{% for p in discover %}{{ card(p) }}{% endfor %}</div>
+  <p style="text-align:center;margin:16px 0 0"><a class="btn ghost" href="{{ url_for('search') }}">See More</a></p></div>
+{% endblock %}

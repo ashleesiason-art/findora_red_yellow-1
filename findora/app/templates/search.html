@@ -1,0 +1,16 @@
+{% extends "base.html" %}{% from "_macros.html" import card %}
+{% block title %}{{ q or 'All products' }} - FINDORA{% endblock %}
+{% block content %}
+<div class="box" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+  <b>Sort by:</b>
+  {% for k, l in [('relevance','Relevance'),('latest','Latest'),('sales','Top Sales'),('price_asc','Price ↑'),('price_desc','Price ↓')] %}
+  <a class="btn sm {{ '' if sort == k else 'gray' }}" href="{{ url_for('search', q=q, cat=cat, sort=k) }}">{{ l }}</a>{% endfor %}
+  <span style="margin-left:auto;color:var(--mut)">{{ products|length }} result(s){% if q %} for “{{ q }}”{% endif %}</span>
+</div>
+<div class="tabs">
+  <a class="{{ '' if cat else 'on' }}" href="{{ url_for('search', q=q) }}">All</a>
+  {% for c in all_categories %}<a class="{{ 'on' if cat == c.id }}" href="{{ url_for('search', q=q, cat=c.id) }}">{{ c.icon }} {{ c.name }}</a>{% endfor %}
+</div>
+{% if products %}<div class="grid">{% for p in products %}{{ card(p) }}{% endfor %}</div>
+{% else %}<div class="box" style="text-align:center;padding:60px">😕 No products found. Try another keyword.</div>{% endif %}
+{% endblock %}

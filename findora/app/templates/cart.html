@@ -1,0 +1,20 @@
+{% extends "base.html" %}{% block title %}Shopping Cart - FINDORA{% endblock %}
+{% block content %}
+<h2 style="color:var(--o)">🛒 Shopping Cart</h2>
+{% if rows %}
+<div class="box">
+  <div class="cart-row" style="color:var(--mut);font-size:13px"><span></span><span>Product</span><span>Unit Price</span><span>Quantity</span><span>Total</span><span>Action</span></div>
+  {% for r in rows %}
+  <div class="cart-row">
+    <a class="thumb" href="{{ url_for('product', pid=r.pid) }}" style="background:{{ r.color }}">{{ r.emoji }}</a>
+    <a href="{{ url_for('product', pid=r.pid) }}">{{ r.name }}</a>
+    <span>{{ r.price|peso }}</span>
+    <form method="post" action="{{ url_for('cart_update') }}"><input type="hidden" name="pid" value="{{ r.pid }}">
+      <span class="qty"><button name="qty" value="{{ r.qty - 1 }}">−</button><input value="{{ r.qty }}" readonly><button name="qty" value="{{ r.qty + 1 }}">+</button></span></form>
+    <b style="color:var(--o)">{{ (r.price * r.qty)|peso }}</b>
+    <form method="post" action="{{ url_for('cart_remove', pid=r.pid) }}"><button class="btn sm gray">Delete</button></form>
+  </div>{% endfor %}
+</div>
+<div class="sumbar"><span>Total ({{ rows|length }} item/s): <b style="font-size:22px;color:var(--o)">{{ subtotal|peso }}</b></span><a class="btn" href="{{ url_for('checkout') }}">Check Out</a></div>
+{% else %}<div class="box" style="text-align:center;padding:70px"><div style="font-size:70px">🛒</div>Your shopping cart is empty<p><a class="btn" href="/">Go Shopping Now</a></p></div>{% endif %}
+{% endblock %}

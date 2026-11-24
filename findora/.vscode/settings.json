@@ -1,0 +1,2 @@
+{ "sqltools.connections": [ { "name": "FINDORA (Docker)", "driver": "MySQL", "server": "127.0.0.1", "port": 3307,
+    "username": "root", "password": "findora123", "database": "findora" } ] }

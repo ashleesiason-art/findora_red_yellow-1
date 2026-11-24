@@ -1,0 +1,17 @@
+# Optional: spin up MySQL 8 with FINDORA preloaded
+#   docker compose up -d
+# Connect: host 127.0.0.1, port 3307, user root, password findora123, db findora
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: findora-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: findora123
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d:ro   # runs 01..03 in order on first start
+      - findora_data:/var/lib/mysql
+volumes:
+  findora_data:

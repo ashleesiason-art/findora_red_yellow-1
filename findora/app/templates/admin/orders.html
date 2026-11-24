@@ -1,0 +1,14 @@
+{% extends "admin/layout.html" %}{% block title %}Orders{% endblock %}
+{% block content %}
+<h1>Orders</h1>
+<div class="tabs"><a class="{{ '' if st else 'on' }}" href="{{ url_for('admin_orders') }}">All</a>{% for s in STATUSES %}<a class="{{ 'on' if st == s }}" href="{{ url_for('admin_orders', status=s) }}">{{ s|capitalize }}</a>{% endfor %}</div>
+<table><tr><th>#</th><th>Customer</th><th>Items</th><th>Ship to</th><th>Total</th><th>Pay</th><th>Status</th></tr>
+{% for o in rows %}<tr>
+  <td>{{ o.id }}<br><small style="color:var(--mut)">{{ o.created_at }}</small></td>
+  <td>{{ o.full_name }}<br><small>{{ o.email }}</small></td>
+  <td>{% for i in o['items'] %}{{ i.name }} ×{{ i.qty }}<br>{% endfor %}</td>
+  <td>{{ o.ship_name }}, {{ o.ship_phone }}<br><small>{{ o.ship_address }}</small></td>
+  <td>{{ o.total|peso }}</td><td>{{ o.payment_method }}</td>
+  <td><form method="post" action="{{ url_for('admin_order_status', oid=o.id) }}"><select name="status" onchange="this.form.submit()">{% for s in STATUSES %}<option {{ 'selected' if s == o.status }}>{{ s }}</option>{% endfor %}</select></form></td>
+</tr>{% else %}<tr><td colspan="7">No orders.</td></tr>{% endfor %}</table>
+{% endblock %}
